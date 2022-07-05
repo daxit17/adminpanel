@@ -1,7 +1,12 @@
 .App {
   text-align: center;
 }
-
+.Mt-100{
+  margin-top: 50px;
+}
+.Err{
+  color: red;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
