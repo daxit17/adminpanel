@@ -20,7 +20,7 @@ export default function Staff() {
     const [dopen, setdOpen] = React.useState(false);
     const [did, setDid] = useState(0);
     const [update, setUpdate] = useState(false);
-
+    const [filterdata, setFilterData] = useState([]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -186,6 +186,23 @@ export default function Staff() {
         setUpdate(false);
     }
 
+    // handleSearch
+
+    const handleSearch = (val) => {
+        let localData = JSON.parse(localStorage.getItem("staff"));
+
+        let fdata = localData.filter((d) => (
+            d.name.toLowerCase().includes(val.toLowerCase()) ||
+            d.doctor.toLowerCase().includes(val.toLowerCase()) ||
+            d.problem.toLowerCase().includes(val.toLowerCase()) ||
+            d.feddback.toLowerCase().includes(val.toLowerCase())
+        ))
+
+        setFilterData(fdata);
+    }
+
+    const finalData = filterdata.length > 0 ? filterdata : data;
+
 
     const { handleBlur, handleChange, handleSubmit, touched, errors, values } = formik;
 
@@ -197,9 +214,19 @@ export default function Staff() {
                 Enter staff Infomation
             </Button>
 
+            <TextField
+                margin="dense"
+                name="search"
+                label="Search"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={(e) => handleSearch(e.target.value)}
+            />
+
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={data}
+                    rows={finalData}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}

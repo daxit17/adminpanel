@@ -20,7 +20,7 @@ export default function Patients() {
     const [dopen, setdOpen] = React.useState(false);
     const [did, setDid] = useState(0);
     const [update, setUpdate] = useState(false);
-
+    const [filterdata, setFilterData] = useState([]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -185,6 +185,24 @@ export default function Patients() {
         setUpdate(false);
     }
 
+    // handleSearch
+
+    const handleSearch = (val) => {
+
+        let localData = JSON.parse(localStorage.getItem("patients"));
+
+        let fdata = localData.filter((d) => (
+            d.name.toLowerCase(val).includes(val.toLowerCase()) ||
+            d.age.toString().includes(val) ||
+            d.weight.toString().includes(val) ||
+            d.number.toString().includes(val)
+        ))
+
+        setFilterData(fdata);
+        
+    }
+
+    const finalData = filterdata.length > 0 ? filterdata : data ;
 
     const { handleBlur, handleChange, handleSubmit, touched, errors, values } = formik;
 
@@ -196,9 +214,19 @@ export default function Patients() {
                 Add Patients Data
             </Button>
 
+            <TextField
+                margin="dense"
+                name="search"
+                label="Search"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={(e) => handleSearch(e.target.value)}
+            />
+
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={data}
+                    rows={finalData}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}

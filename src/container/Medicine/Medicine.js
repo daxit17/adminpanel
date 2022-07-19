@@ -19,8 +19,8 @@ function Medicine(props) {
     const [dopen, setDopen] = React.useState(false);
     const [did, setDid] = useState(0);
     const [update, setUpdate] = useState(false);
-
     const [data, setData] = useState([]);
+    const [filterData, setFilterData] = useState([]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -40,12 +40,16 @@ function Medicine(props) {
         setDopen(false);
     };
 
+    // schema
+
     let schema = yup.object().shape({
         name: yup.string().required("Please enter name."),
         price: yup.number().required("Please enter price.").positive().integer(),
         quantity: yup.string().required("Please enter quantity"),
         expiry: yup.string().required("Please enter expiry.")
     });
+
+    // handleData
 
     const handleData = (values) => {
 
@@ -71,6 +75,8 @@ function Medicine(props) {
 
     }
 
+    // localdata
+
     const localdata = () => {
         const datap = JSON.parse(localStorage.getItem("medicine"));
         if (datap !== null) {
@@ -78,6 +84,7 @@ function Medicine(props) {
         }
     }
 
+    // updatedata
 
     const updatedata = (values) => {
         const upddata = JSON.parse(localStorage.getItem("medicine"))
@@ -95,6 +102,8 @@ function Medicine(props) {
         localdata()
         setUpdate(false)
     }
+
+    // formik
 
     const formik = useFormik({
         initialValues: {
@@ -115,6 +124,8 @@ function Medicine(props) {
         },
     });
 
+    // handleDelete
+
     const handleDelete = () => {
         let localData = JSON.parse(localStorage.getItem("medicine"));
 
@@ -127,6 +138,8 @@ function Medicine(props) {
         LoadData();
     }
 
+    // handleEdit
+
     const handleEdit = (params) => {
         handleClickOpen();
 
@@ -134,6 +147,8 @@ function Medicine(props) {
 
         formik.setValues(params.row)
     }
+
+    // columns
 
     const columns = [
         { field: 'name', headerName: 'NAME', width: 200 },
@@ -157,6 +172,8 @@ function Medicine(props) {
         },
     ];
 
+    // LoadData
+
     const LoadData = () => {
         let localData = JSON.parse(localStorage.getItem("medicine"));
 
@@ -166,11 +183,30 @@ function Medicine(props) {
 
     }
 
+    // useEffect
+
     useEffect(() => {
         LoadData();
     }, []);
 
+    // hanldeSearch
 
+    const hanldeSearch = (val) => {
+
+        let localData = JSON.parse(localStorage.getItem("medicine"));
+
+        let fdata = localData.filter((d) => (
+            d.name.toLowerCase().includes(val.toLowerCase()) ||
+            d.price.toString().includes(val) ||
+            d.quantity.toString().includes(val) ||
+            d.expiry.toString().includes(val)
+        ))
+
+        setFilterData(fdata);
+
+    }
+
+    const finalData = filterData.length > 0 ? filterData : data;
 
     const { handleBlur, handleChange, handleSubmit, touched, errors, values } = formik;
 
@@ -181,9 +217,19 @@ function Medicine(props) {
                 Add Medicine Data
             </Button>
 
+            <TextField
+                margin="dense"
+                name="search"
+                label="Search"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={(e) => hanldeSearch(e.target.value)}
+            />
+
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={data}
+                    rows={finalData}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
