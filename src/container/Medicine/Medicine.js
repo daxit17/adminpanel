@@ -13,7 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMedicines, dataMedicine } from '../../Redux/Actions/Medicine_Action';
+import { addMedicines, dataMedicine, deleteMedicines, updateMedicine } from '../../Redux/Actions/Medicine_Action';
 
 function Medicine(props) {
 
@@ -91,16 +91,18 @@ function Medicine(props) {
     // updatedata
 
     const updatedata = (values) => {
-        const upddata = JSON.parse(localStorage.getItem("medicine"))
+        // const upddata = JSON.parse(localStorage.getItem("medicine"))
 
-        const newdata = upddata.map((m) => {
-            if (m.id === values.id) {
-                return values;
-            } else {
-                return m;
-            }
-        })
-        localStorage.setItem("medicine", JSON.stringify(newdata))
+        // const newdata = upddata.map((m) => {
+        //     if (m.id === values.id) {
+        //         return values;
+        //     } else {
+        //         return m;
+        //     }
+        // })
+        // localStorage.setItem("medicine", JSON.stringify(newdata))
+
+        dispatch(updateMedicine(values))
 
         handleClose()
         localdata()
@@ -131,11 +133,14 @@ function Medicine(props) {
     // handleDelete
 
     const handleDelete = () => {
-        let localData = JSON.parse(localStorage.getItem("medicine"));
 
-        let fData = localData.filter((l) => l.id !== did);
+        // let localData = JSON.parse(localStorage.getItem("medicine"));
 
-        localStorage.setItem("medicine", JSON.stringify(fData));
+        // let fData = localData.filter((l) => l.id !== did);
+
+        // localStorage.setItem("medicine", JSON.stringify(fData));
+
+        dispatch(deleteMedicines(did));
 
         handleDclose();
 
@@ -269,9 +274,7 @@ function Medicine(props) {
                                 </DialogTitle>
                                 <DialogActions>
                                     <Button onClick={handleDclose}>NO</Button>
-                                    <Button onClick={handleDelete} autoFocus>
-                                        YES
-                                    </Button>
+                                    <Button onClick={handleDelete} > YES </Button>
                                 </DialogActions>
                             </Dialog>
 
