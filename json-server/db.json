@@ -1,0 +1,70 @@
+{
+  "medicine": [
+    {
+      "id": 1,
+      "name": "ABC",
+      "price": 400,
+      "quantity": 3000,
+      "expiry": 2025
+    },
+    {
+      "id": 2,
+      "name": "DEF",
+      "price": 400,
+      "quantity": 3000,
+      "expiry": 2025
+    },
+    {
+      "id": 3,
+      "name": "GHI",
+      "price": 400,
+      "quantity": 3000,
+      "expiry": 2025
+    },
+    {
+      "id": 4,
+      "name": "JKL",
+      "price": 400,
+      "quantity": 3000,
+      "expiry": 2025
+    },
+    {
+      "id": 5,
+      "name": "MNO",
+      "price": 400,
+      "quantity": 3000,
+      "expiry": 2025
+    },
+    {
+      "id": 22,
+      "name": "pqr",
+      "price": "12",
+      "quantity": "4",
+      "expiry": "21"
+    },
+    {
+      "id": 301,
+      "name": "PQR",
+      "price": "20",
+      "quantity": "2",
+      "expiry": "2023"
+    },
+    {
+      "id": 385,
+      "name": "ASDAS",
+      "price": "123",
+      "quantity": "2",
+      "expiry": "21"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

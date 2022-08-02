@@ -20,6 +20,7 @@ import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import {NavLink} from 'react-router-dom';
 import GroupIcon from '@mui/icons-material/Group';
+import PlusOneIcon from '@mui/icons-material/PlusOne';
 
 const drawerWidth = 240;
 
@@ -84,6 +85,7 @@ export default function Weblayout({children}) {
     {label:'Medicines' , to:'/medicine' , icon:<MedicalServicesIcon/>},
     {label:'Patients' , to:'/patients' , icon:<AccessibilityIcon/>},
     {label:'Staff' , to:'/staff' , icon:<GroupIcon/>},
+    {label:'Counter' , to:'/counter' , icon:<PlusOneIcon/>},
   ]
 
   return (
@@ -139,6 +141,7 @@ export default function Weblayout({children}) {
         <Divider />
       </Drawer>
       <Main open={open}>
+      <DrawerHeader />
         {children}
       </Main>
     </Box>
