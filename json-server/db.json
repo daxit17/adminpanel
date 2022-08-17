@@ -1,74 +1,34 @@
 {
   "medicine": [
     {
-      "id": 1,
-      "name": "ABC",
-      "price": 400,
-      "quantity": 3000,
-      "expiry": 2025
-    },
-    {
-      "id": 2,
-      "name": "DEF",
-      "price": 400,
-      "quantity": 3000,
-      "expiry": 2025
-    },
-    {
-      "id": 3,
-      "name": "GHI",
-      "price": 400,
-      "quantity": 3000,
-      "expiry": 2025
-    },
-    {
-      "id": 4,
-      "name": "JKL",
-      "price": 400,
-      "quantity": 3000,
-      "expiry": 2025
+      "id": 385,
+      "name": "ASDAS",
+      "price": "1234",
+      "quantity": "234",
+      "expiry": "21"
     },
     {
       "id": 5,
-      "name": "MNO",
-      "price": 400,
-      "quantity": 3000,
-      "expiry": 2025
-    },
-    {
-      "id": 22,
-      "name": "pqr",
-      "price": "12",
-      "quantity": "4",
-      "expiry": "21"
-    },
-    {
-      "id": 301,
-      "name": "PQR",
-      "price": "20",
+      "name": "Daxit",
+      "price": "1",
       "quantity": "2",
       "expiry": "2023"
-    },
-    {
-      "id": 385,
-      "name": "ASDAS",
-      "price": "123",
-      "quantity": "2",
-      "expiry": "21"
-    },
-    {
-      "id": 271,
-      "name": "QEQ212",
-      "price": "22",
-      "quantity": "3",
-      "expiry": "21"
     }
   ],
-  "comments": [
+  "staff": [
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "id": 910,
+      "name": "ABCD",
+      "doctor": "fedsfadfasdsdfadf",
+      "problem": "egf4argt",
+      "feddback": "nothing"
+    },
+    {
+      "id": 123,
+      "name": "Daxit",
+      "doctor": "fedsfadf",
+      "problem": "sardi",
+      "feddback": "nothing"
     }
   ],
   "profile": {

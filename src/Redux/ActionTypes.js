@@ -6,3 +6,10 @@ export const MEDICINE_ERROR = 'MEDICINE_ERROR';
 export const MEDICINE_ADD = 'MEDICINE_ADD';
 export const MEDICINE_DELETE = 'MEDICINE_DELETE';
 export const MEDICINE_UPDATE = 'MEDICINE_UPDATE';
+
+export const STAFF_DATA = "STAFF_DATA";
+export const STAFF_ADD = "STAFF_ADD";
+export const STAFF_LOADING = "STAFF_LOADING";
+export const STAFF_ERROR = "STAFF_ERROR";
+export const STAFF_DELETE = "STAFF_DELETE";
+export const STAFF_UPDATE = "STAFF_UPDATE";

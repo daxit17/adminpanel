@@ -1,20 +1,20 @@
-import { BASE_URL } from '../../Base_Url/Base_Url';
-import { addMedicinesData, deleteMedicinesData, getAllMedicinesData, postMedicinesData, putMedicinesData } from '../../common/apis/Medicine_Api';
-import * as ActionTypes from '../ActionTypes';
+import * as ActionTypes from "../ActionTypes";
+import { BASE_URL } from "../../Base_Url/Base_Url";
+import { deleteAllStaffData, getAllStaffData, postAllStaffData, putAllStaffData } from "../../common/apis/Staff_Api";
 
-export const dataMedicine = () => (dispatch) => {
+export const staffData = () => (dispatch) => {
 
     try {
 
-        dispatch(LoadingMedicines());
+        dispatch(isLoading());
 
         setTimeout(function () {
 
-            getAllMedicinesData()
-                .then((data) => dispatch({ type: ActionTypes.MEDICINE_DATA, payload: data.data }))
-                .catch((error) => dispatch(ErrorMedicine(error.message)));
+            getAllStaffData()
+                .then((data) => dispatch({ type: ActionTypes.STAFF_DATA, payload: data.data }))
+                .catch((error) => dispatch(medicineFailed(error.message)));
 
-            // fetch(BASE_URL + 'medicine')
+            // fetch(BASE_URL + 'staff')
 
             //     .then(response => {
             //         if (response.ok) {
@@ -31,27 +31,34 @@ export const dataMedicine = () => (dispatch) => {
             //         })
 
             //     .then((response) => response.json())
-            //     .then((data) => dispatch({ type: ActionTypes.MEDICINE_DATA, payload: data }))
-            //     .catch((error) => dispatch(ErrorMedicine(error.message)));
+            //     .then((data) => dispatch({ type: ActionTypes.STAFF_DATA, payload: data }))
+            //     .catch((error) => dispatch(medicineFailed(error.message)));
 
-        }, 2000)
+        }, 2000);
 
     } catch (error) {
-        dispatch(ErrorMedicine(error.message));
+        dispatch(medicineFailed(error.message))
     }
 
 }
 
-export const addMedicines = (data) => (dispatch) => {
+export const isLoading = () => (dispatch) => {
+    dispatch({ type: ActionTypes.STAFF_LOADING })
+}
+
+export const medicineFailed = (error) => (dispatch) => {
+    dispatch({ type: ActionTypes.STAFF_ERROR, payload: error })
+}
+
+export const addStaffData = (data) => (dispatch) => {
 
     try {
 
-        postMedicinesData(data)
+        postAllStaffData(data)
+            .then((data) => dispatch({ type: ActionTypes.STAFF_ADD, payload: data.data }))
+            .catch((error) => dispatch(medicineFailed(error.message)));
 
-            .then((data) => dispatch({ type: ActionTypes.MEDICINE_ADD, payload: data.data }))
-            .catch((error) => dispatch(ErrorMedicine(error.message)));
-
-        // fetch(BASE_URL + 'medicine', {
+        // fetch(BASE_URL + 'staff', {
         //     method: 'POST',
         //     headers: {
         //         'Content-Type': 'application/json',
@@ -74,23 +81,26 @@ export const addMedicines = (data) => (dispatch) => {
         //         })
 
         //     .then((response) => response.json())
-        //     .then((data) => dispatch({ type: ActionTypes.MEDICINE_ADD, payload: data }))
-        //     .catch((error) => dispatch(ErrorMedicine(error.message)));
+        //     .then((data) => dispatch({ type: ActionTypes.STAFF_ADD, payload: data }))
+        //     .catch((error) => dispatch(medicineFailed(error.message)));
+
+
 
     } catch (error) {
-        dispatch(ErrorMedicine(error.message));
+        dispatch(medicineFailed(error.message));
     }
 }
 
-export const deleteMedicines = (id) => (dispatch) => {
+export const staffDelete = (id) => (dispatch) => {
+
     try {
 
-        deleteMedicinesData(id)
-            .then(dispatch({ type: ActionTypes.MEDICINE_DELETE, payload: id }))
-            .catch((error) => dispatch(ErrorMedicine(error.message)));
+        deleteAllStaffData(id)
+            .then(dispatch({ type: ActionTypes.STAFF_DELETE, payload: id }))
+            .catch((error) => dispatch(medicineFailed(error.message)));
 
-        // fetch(BASE_URL + 'medicine/' + id, {
-        //     method: "DELETE",
+        // fetch(BASE_URL + 'staff/' + id, {
+        //     method: 'DELETE',
         // })
 
         //     .then(response => {
@@ -108,22 +118,23 @@ export const deleteMedicines = (id) => (dispatch) => {
         //         })
 
         //     .then((response) => response.json())
-        //     .then(dispatch({ type: ActionTypes.MEDICINE_DELETE, payload: id }))
-        //     .catch((error) => dispatch(ErrorMedicine(error.message)));
+        //     .then(dispatch({ type: ActionTypes.STAFF_DELETE, payload: id }))
+        //     .catch((error) => dispatch(medicineFailed(error.message)));
 
     } catch (error) {
-        dispatch(ErrorMedicine(error.message));
+        dispatch(medicineFailed(error.message))
     }
 }
 
-export const updateMedicine = (data) => (dispatch) => {
+export const staffUpdate = (data) => (dispatch) => {
+
     try {
 
-        putMedicinesData(data)
-            .then((data) => dispatch({ type: ActionTypes.MEDICINE_UPDATE, payload: data.data }))
-            .catch((error) => dispatch(ErrorMedicine(error.message)));
+        putAllStaffData(data)
+            .then((data) => dispatch({ type: ActionTypes.STAFF_UPDATE, payload: data.data }))
+            .catch((error) => dispatch(medicineFailed(error.message)));
 
-        // fetch(BASE_URL + 'medicine/' + data.id, {
+        // fetch(BASE_URL + 'staff/' + data.id, {
         //     method: 'PUT',
         //     headers: {
         //         'Content-Type': 'application/json',
@@ -146,18 +157,11 @@ export const updateMedicine = (data) => (dispatch) => {
         //         })
 
         //     .then((response) => response.json())
-        //     .then((data) => dispatch({ type: ActionTypes.MEDICINE_UPDATE, payload: data }))
-        //     .catch((error) => dispatch(ErrorMedicine(error.message)));
+        //     .then((data) => dispatch({ type: ActionTypes.STAFF_UPDATE, payload: data }))
+        //     .catch((error) => dispatch(medicineFailed(error.message)));
 
     } catch (error) {
-        dispatch(ErrorMedicine(error.message));
+        dispatch(medicineFailed(error.message));
+
     }
-}
-
-export const LoadingMedicines = () => (dispatch) => {
-    dispatch({ type: ActionTypes.MEDICINE_LOADING })
-}
-
-export const ErrorMedicine = (error) => (dispatch) => {
-    dispatch({ type: ActionTypes.MEDICINE_ERROR, payload: error })
 }
