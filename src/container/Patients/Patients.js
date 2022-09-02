@@ -13,6 +13,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DialogContentText from '@mui/material/DialogContentText';
+import { addPatientsData } from '../../Redux/Actions/Patients_Action';
+import { useDispatch } from "react-redux";
 
 export default function Patients() {
     const [open, setOpen] = React.useState(false);
@@ -71,25 +73,29 @@ export default function Patients() {
         },
     });
 
+    let dispatch = useDispatch();
+
     // handleInsert
 
     const handleInsert = (values) => {
 
-        let localData = JSON.parse(localStorage.getItem("patients"));
+        dispatch(addPatientsData(values));
 
-        let id = Math.floor(Math.random() * 1000);
+        // let localData = JSON.parse(localStorage.getItem("patients"));
 
-        let data = {
-            id: id,
-            ...values
-        }
+        // let id = Math.floor(Math.random() * 1000);
 
-        if (localData === null) {
-            localStorage.setItem("patients", JSON.stringify([data]));
-        } else {
-            localData.push(data);
-            localStorage.setItem("patients", JSON.stringify(localData));
-        }
+        // let data = {
+        //     id: id,
+        //     ...values
+        // }
+
+        // if (localData === null) {
+        //     localStorage.setItem("patients", JSON.stringify([data]));
+        // } else {
+        //     localData.push(data);
+        //     localStorage.setItem("patients", JSON.stringify(localData));
+        // }
 
         LoadData();
         handleClose();
@@ -199,10 +205,10 @@ export default function Patients() {
         ))
 
         setFilterData(fdata);
-        
+
     }
 
-    const finalData = filterdata.length > 0 ? filterdata : data ;
+    const finalData = filterdata.length > 0 ? filterdata : data;
 
     const { handleBlur, handleChange, handleSubmit, touched, errors, values } = formik;
 

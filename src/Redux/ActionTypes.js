@@ -13,3 +13,5 @@ export const STAFF_LOADING = "STAFF_LOADING";
 export const STAFF_ERROR = "STAFF_ERROR";
 export const STAFF_DELETE = "STAFF_DELETE";
 export const STAFF_UPDATE = "STAFF_UPDATE";
+
+export const PATIENTS_ADD = "PATIENTS_ADD";
