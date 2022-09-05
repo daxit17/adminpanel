@@ -13,8 +13,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DialogContentText from '@mui/material/DialogContentText';
-import { addPatientsData } from '../../Redux/Actions/Patients_Action';
-import { useDispatch } from "react-redux";
+import { addPatientsData, patientsData } from '../../Redux/Actions/Patients_Action';
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Patients() {
     const [open, setOpen] = React.useState(false);
@@ -138,8 +138,11 @@ export default function Patients() {
 
     }
 
+    const patients = useSelector(state => state.patients);
+
     useEffect(() => {
-        LoadData();
+        dispatch(patientsData());
+        //  LoadData();
     }, []);
 
     // handleDelete
@@ -232,7 +235,7 @@ export default function Patients() {
 
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={finalData}
+                    rows={patients.patients}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}

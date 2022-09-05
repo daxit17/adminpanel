@@ -15,3 +15,4 @@ export const STAFF_DELETE = "STAFF_DELETE";
 export const STAFF_UPDATE = "STAFF_UPDATE";
 
 export const PATIENTS_ADD = "PATIENTS_ADD";
+export const PATIENTS_DATA = "PATIENTS_DATA";
