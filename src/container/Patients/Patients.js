@@ -13,8 +13,9 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DialogContentText from '@mui/material/DialogContentText';
-import { addPatientsData, patientsData } from '../../Redux/Actions/Patients_Action';
+import { addPatientsData, patientsData, patientsDataDelete, patientsDataUpdate } from '../../Redux/Actions/Patients_Action';
 import { useDispatch, useSelector } from "react-redux";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 export default function Patients() {
     const [open, setOpen] = React.useState(false);
@@ -48,8 +49,9 @@ export default function Patients() {
     let schema = yup.object().shape({
         name: yup.string().required("Please Enter Name..."),
         age: yup.number().required("Please Enter Age...").positive().integer(),
-        weight: yup.number().required("Please Enter Weight").positive().integer(),
-        number: yup.number().required("Please Enter number").min(10),
+        weight: yup.number().required("Please Enter Weight...").positive().integer(),
+        number: yup.number().required("Please Enter number...").min(10),
+        pro_img: yup.mixed().required("Please Select Profile Image...")
     });
 
     // formik (Formik)
@@ -60,6 +62,7 @@ export default function Patients() {
             age: '',
             weight: '',
             number: '',
+            pro_img: ''
         },
         validationSchema: schema,
         onSubmit: (values, action) => {
@@ -78,6 +81,8 @@ export default function Patients() {
     // handleInsert
 
     const handleInsert = (values) => {
+
+        console.log(values);
 
         dispatch(addPatientsData(values));
 
@@ -142,20 +147,24 @@ export default function Patients() {
 
     useEffect(() => {
         dispatch(patientsData());
-        //  LoadData();
+        // LoadData();
     }, []);
 
     // handleDelete
 
-    const handleDelete = () => {
-        let localData = JSON.parse(localStorage.getItem("patients"));
+    const handleDelete = (params) => {
 
-        let fData = localData.filter((l) => l.id !== did);
+        // let localData = JSON.parse(localStorage.getItem("patients"));
 
-        localStorage.setItem("patients", JSON.stringify(fData));
+        // let fData = localData.filter((l) => l.id !== did);
+
+        // localStorage.setItem("patients", JSON.stringify(fData));
+
+        dispatch(patientsDataDelete(did));
 
         handleDClose();
         LoadData();
+
     }
 
     // handleEdit
@@ -177,17 +186,20 @@ export default function Patients() {
     // updatedata
 
     const updatedata = (values) => {
-        const upddata = JSON.parse(localStorage.getItem("patients"))
 
-        const newdata = upddata.map((m) => {
-            if (m.id === values.id) {
-                return values;
-            } else {
-                return m;
-            }
-        });
+        dispatch(patientsDataUpdate(values));
 
-        localStorage.setItem("patients", JSON.stringify(newdata));
+        // const upddata = JSON.parse(localStorage.getItem("patients"))
+
+        // const newdata = upddata.map((m) => {
+        //     if (m.id === values.id) {
+        //         return values;
+        //     } else {
+        //         return m;
+        //     }
+        // });
+
+        // localStorage.setItem("patients", JSON.stringify(newdata));
 
         handleClose();
         localdata();
@@ -213,7 +225,7 @@ export default function Patients() {
 
     const finalData = filterdata.length > 0 ? filterdata : data;
 
-    const { handleBlur, handleChange, handleSubmit, touched, errors, values } = formik;
+    const { handleBlur, handleChange, handleSubmit, touched, errors, values, setFieldValue } = formik;
 
     return (
         <div>
@@ -323,6 +335,14 @@ export default function Patients() {
                                 onBlur={handleBlur}
                             />
                             {errors.number && touched.number ? <p className='Err'> {errors.number} </p> : ''}
+
+                            <input
+                                type="file"
+                                name='pro_img'
+                                onChange={(e) => setFieldValue("pro_img", e.target.files[0])}
+                            />
+                            {errors.pro_img && touched.pro_img ? <p className='Err'> {errors.pro_img} </p> : ''}
+
                             <DialogActions>
                                 <Button onClick={handleClose}>Cancel</Button>
                                 {
