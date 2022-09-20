@@ -115,6 +115,14 @@ export default function Patients() {
         { field: 'weight', headerName: 'WEIGHT', width: 200 },
         { field: 'number', headerName: 'NUMBER', width: 200 },
         {
+            field: 'pro_img',
+            headerName: 'PROFILE-IMG',
+            width: 200,
+            renderCell: (params) => (
+                <img src={params.row.pro_img} width={35} height={35} />
+            )
+        },
+        {
             field: 'action',
             headerName: 'ACTION',
             width: 200,

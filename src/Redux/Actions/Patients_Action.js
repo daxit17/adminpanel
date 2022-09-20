@@ -1,13 +1,35 @@
 import { async } from "@firebase/util";
+import { MAX_PAGE_SIZE } from "@mui/x-data-grid";
 import { addDoc, collection, getDocs, doc, deleteDoc, updateDoc, deleteField } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../Firebase";
 import * as ActionTypes from '../ActionTypes';
+
+export const patientsData = () => async (dispatch) => {
+    try {
+        const querySnapshot = await getDocs(collection(db, "patients"));
+
+        let data = [];
+
+        querySnapshot.forEach((doc) => {
+            data.push({ id: doc.id, ...doc.data() })
+            // console.log(`${doc.id} => ${doc.data()}`);
+            // console.log(data);
+        });
+
+        dispatch({ type: ActionTypes.PATIENTS_DATA, payload: data })
+
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 export const addPatientsData = (data) => async (dispatch) => {
     try {
 
-        const patientsRef = ref(storage, 'patients' + data.pro_img.name);
+        let randomNum = Math.floor(Math.random() * 100000).toString();
+
+        const patientsRef = ref(storage, 'patients/' + randomNum);
 
         uploadBytes(patientsRef, data.pro_img)
             .then((snapshot) => {
@@ -15,7 +37,8 @@ export const addPatientsData = (data) => async (dispatch) => {
                     .then(async (url) => {
                         const docRef = await addDoc(collection(db, "patients"), {
                             ...data,
-                            pro_img: url
+                            pro_img: url,
+                            fileName: randomNum
                         });
                         dispatch({
                             type: ActionTypes.PATIENTS_ADD,
@@ -34,30 +57,22 @@ export const addPatientsData = (data) => async (dispatch) => {
     }
 }
 
-export const patientsData = () => async (dispatch) => {
+export const patientsDataDelete = (data) => async (dispatch) => {
     try {
-        const querySnapshot = await getDocs(collection(db, "patients"));
+        console.log(data);
 
-        let data = [];
+        const deletetRef = ref(storage, 'patients/' + data.row.fileName);
 
-        querySnapshot.forEach((doc) => {
-            data.push({ id: doc.id, ...doc.data() })
-            console.log(`${doc.id} => ${doc.data()}`);
-            console.log(data);
-        });
+        deleteObject(deletetRef)
+            .then(async () => {
 
-        dispatch({ type: ActionTypes.PATIENTS_DATA, payload: data })
+                await deleteDoc(doc(db, "patients", data.id));
 
-    } catch (e) {
-        console.log(e);
-    }
-}
+                dispatch({ type: ActionTypes.PATIENTS_DELETE, payload: data.id })
 
-export const patientsDataDelete = (id) => async (dispatch) => {
-    try {
-        await deleteDoc(doc(db, "patients", id));
-
-        dispatch({ type: ActionTypes.PATIENTS_DELETE, payload: id })
+            }).catch((error) => {
+                console.log(error);
+            });
 
     } catch (e) {
         console.log(e);
