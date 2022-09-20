@@ -9,10 +9,12 @@ import Staff from './container/Staff/Staff';
 import { configureStore } from './Redux/Store';
 import { PersistGate } from 'redux-persist/integration/react'
 import Promise_Example from './container/Example/Promise_Example';
+import Example_UseMemo from './container/Example/Example_UseMemo';
+import Example_UseCallBack from './container/Example/Example_UseCallBack';
 
 function App() {
 
-  const {store,persistor} = configureStore()
+  const { store, persistor } = configureStore()
 
   return (
     <div className="App">
@@ -25,6 +27,8 @@ function App() {
               <Route path={'/staff'} exact component={Staff} />
               <Route path={'/counter'} exact component={Counter} />
               <Route path={'/example'} exact component={Promise_Example} />
+              <Route path={'/exampleusememo'} exact component={Example_UseMemo} />
+              <Route path={'/exampleusecallback'} exact component={Example_UseCallBack} />
             </Switch>
           </Weblayout>
         </PersistGate>

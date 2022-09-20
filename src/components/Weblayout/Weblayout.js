@@ -18,10 +18,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import GroupIcon from '@mui/icons-material/Group';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
 import BoltIcon from '@mui/icons-material/Bolt';
+import BubbleChartIcon from '@mui/icons-material/BubbleChart';
+import CallIcon from '@mui/icons-material/Call';
 
 const drawerWidth = 240;
 
@@ -70,7 +72,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-export default function Weblayout({children}) {
+export default function Weblayout({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -83,11 +85,13 @@ export default function Weblayout({children}) {
   };
 
   const MedicineData = [
-    {label:'Medicines' , to:'/medicine' , icon:<MedicalServicesIcon/>},
-    {label:'Patients' , to:'/patients' , icon:<AccessibilityIcon/>},
-    {label:'Staff' , to:'/staff' , icon:<GroupIcon/>},
-    {label:'Counter' , to:'/counter' , icon:<PlusOneIcon/>},
-    {label:'Example' , to:'/example' , icon:<BoltIcon/>},
+    { label: 'Medicines', to: '/medicine', icon: <MedicalServicesIcon /> },
+    { label: 'Patients', to: '/patients', icon: <AccessibilityIcon /> },
+    { label: 'Staff', to: '/staff', icon: <GroupIcon /> },
+    { label: 'Counter', to: '/counter', icon: <PlusOneIcon /> },
+    { label: 'Example', to: '/example', icon: <BoltIcon /> },
+    { label: 'Example UseMemo', to: '/exampleusememo', icon: <BubbleChartIcon /> },
+    { label: 'Example UseCallBack', to: '/exampleusecallback', icon: <CallIcon /> },
   ]
 
   return (
@@ -143,7 +147,7 @@ export default function Weblayout({children}) {
         <Divider />
       </Drawer>
       <Main open={open}>
-      <DrawerHeader />
+        <DrawerHeader />
         {children}
       </Main>
     </Box>
